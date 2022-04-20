@@ -5,35 +5,50 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import cred 
 
+
 scopes = ["user-library-read", "playlist-modify-public"]
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=cred.client_ID, client_secret= cred.client_SECRET, redirect_uri=cred.redirect_url, scope=scopes))
 
-     
+  
+def standarize_name(name):
+    
+    name = name.lower().replace(" ", "")
+    
+    return name
+
 def get_saved_tracks(sp, artist_requested):
     matched_tracks = dict()
 
     saved_tracks = sp.current_user_saved_tracks(50)
     off = 0
-    i = 0
+    start = 0
     
     while saved_tracks['next'] != None:
         
-        if i != 0:
+        if start != 0:
             saved_tracks = sp.current_user_saved_tracks(50,off)
             
         for idx, item in enumerate(saved_tracks['items']):
-            i += 1
+            artists = set()
+            start += 1
             track = item['track']
-            artist = track['artists'][0]['name']
+            
+            for artist in track['artists']:
                 
-            if artist_requested == artist:
+                artist_standard_name = standarize_name(artist['name'])
+                
+                artists.add(artist_standard_name)
+            
+            # artist = track['artists'][0]['name']
+                
+            if standarize_name(artist_requested) in artists:
                 
                 matched_tracks[track['name']] = track['uri']
 
         off += 50
         time.sleep(1)
         
-    return(matched_tracks)
+    return matched_tracks 
         
 def create_playlist(sp, playlist_name, playlist_description):
     user = sp.current_user()
@@ -50,8 +65,7 @@ def create_playlist(sp, playlist_name, playlist_description):
 def add_tracks_playlist(sp, playlist_id, items):
 
     sp.playlist_add_items(playlist_id, items)
-    
-    
+      
 def main():
     
     artist_requested = input("Please enter the name the artist as it appears on Spotify: ")
