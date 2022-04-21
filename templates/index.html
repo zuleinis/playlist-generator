@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename= 'css/style.css') }}"
+    />
+    <title>FlaskBlog</title>
+  </head>
+  <body>
+    <h1> Create a New Playlist </h1>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="artist">Artist</label>
+            <input type="text" name="artist"
+                placeholder="Artist name" class="form-control"
+                value="{{ request.form['artist'] }}"></input>
+        </div>
+
+        <div class="form-group">
+            <label for="playlist-name">Playlist Name</label>
+            <input type="text" name="playlist-name" placeholder="E.g. Hail fulanito/a"
+                    class="form-control">{{ request.form['playlist-name'] }}</input>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea name="description" placeholder="E.g. My favorite songs by fulanito/a'"
+                    class="form-control">{{ request.form['description'] }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+    </body>
+</html>
