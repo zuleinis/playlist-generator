@@ -4,6 +4,10 @@ from  flask import Flask, request, render_template, url_for, flash, redirect
 
 backend = Flask(__name__)
 
+@backend.route('/success')
+def success():
+    return render_template('success.html')
+
 @backend.route('/', methods=('GET', 'POST'))
 def index():
     
@@ -16,6 +20,6 @@ def index():
             flash('Artist is required!')
         else:
             test(artist_requested=artist, playlist_name=playlistName, playlist_description=playlistDescription)
-            return redirect(url_for('index'))
+            return redirect(url_for('success'))
     
     return render_template('index.html')

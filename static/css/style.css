@@ -1,6 +1,14 @@
-h1 {
+/* h1 {
   border: 2px #eee solid;
   color: brown;
   text-align: center;
   padding: 10px;
+} */
+
+div#loading {
+  width: 100px;
+  height: 100px;
+  display: none;
+  background: url(/static/loadingimage.gif) no-repeat;
+  cursor: wait;
 }
