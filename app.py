@@ -1,14 +1,15 @@
-from backend import test 
+from backend import generate_full_playlist 
 import cred
 from  flask import Flask, request, render_template, url_for, flash, redirect
 
-backend = Flask(__name__)
+app = Flask(__name__)
 
-@backend.route('/success')
-def success():
-    return render_template('success.html')
+@app.route('/result')
+@app.route('/result/<id>')
+def result(id=None):
+    return render_template('result.html', id=id)
 
-@backend.route('/', methods=('GET', 'POST'))
+@app.route('/', methods=('GET', 'POST'))
 def index():
     
     if request.method == 'POST':
@@ -19,7 +20,7 @@ def index():
         if not artist:
             flash('Artist is required!')
         else:
-            test(artist_requested=artist, playlist_name=playlistName, playlist_description=playlistDescription)
-            return redirect(url_for('success'))
+            playlist_id = generate_full_playlist(artist_requested=artist, playlist_name=playlistName, playlist_description=playlistDescription)
+            return redirect(url_for('result', id=playlist_id))
     
     return render_template('index.html')

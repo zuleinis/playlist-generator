@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>FlaskBlog</title>
+  </head>
+  <body>
+    {% if id %} {% set url = "https://open.spotify.com/playlist/" + id %}
+    <div class="center">
+      <h1>Your Playlist is Ready!</h1>
+      <div class="d-grid gap-2 mx-auto">
+        <div>
+          <a href="{{url}}" class="btn btn-primary">Go to Playlist</a>
+        </div>
+        <div>
+          <a href="/" class="btn btn-outline-primary"
+            >Create Another Playlist</a
+          >
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="center">
+      <p>Oops! We couldn't find any saved tracks by this artist.</p>
+      <a href="/">Try Again</a>
+    </div>
+    {% endif %}
+  </body>
+</html>

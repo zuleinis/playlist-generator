@@ -6,10 +6,12 @@ from spotipy.oauth2 import SpotifyOAuth
 import cred 
 
 
+
 scopes = ["user-library-read", "playlist-modify-public"]
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=cred.client_ID, client_secret= cred.client_SECRET, redirect_uri=cred.redirect_url, scope=scopes))
 
-  
+
+
 def standarize_name(name):
     
     name = name.lower().replace(" ", "")
@@ -46,36 +48,39 @@ def get_saved_tracks(sp, artist_requested):
                 matched_tracks[track['name']] = track['uri']
 
         off += 50
-        time.sleep(1)
+        # time.sleep(1)
         
     return matched_tracks 
         
 def create_playlist(sp, playlist_name, playlist_description):
     user = sp.current_user()
     user_id = user['id']
-
+    playlist = dict()
 
     # playlist_name = "Drake 2"
     # playlist_description = "Testing COMP4999 Project"
 
     new_playlist = sp.user_playlist_create(user_id, playlist_name, public=True, collaborative=False, description=playlist_description)
-    
-    return new_playlist['id']
+    playlist['id'] = new_playlist['id']
+    playlist['url'] = new_playlist['external_urls']['spotify']
+    return playlist
 
 def add_tracks_playlist(sp, playlist_id, items):
 
     sp.playlist_add_items(playlist_id, items)
       
-def test(artist_requested, playlist_name, playlist_description):
+def generate_full_playlist(artist_requested, playlist_name, playlist_description):
     
     # artist_requested = input("Please enter the name the artist as it appears on Spotify: ")
     # playlist_name = input("What would you like your new playlist to be called? ")
     # playlist_description = input("Describe your playlist: ")
     
-    tracks = get_saved_tracks(sp, artist_requested)
-    playlist = create_playlist(sp, playlist_name, playlist_description)
-    add_tracks_playlist(sp, playlist, tracks.values())
+    try:
+        tracks = get_saved_tracks(sp, artist_requested)
+        playlist = create_playlist(sp, playlist_name, playlist_description)
+        add_tracks_playlist(sp, playlist['id'], tracks.values())
+        
+        return playlist['id']
+    except:
+        return None
     
-    print("Playlist created!")
-    
-# test()
