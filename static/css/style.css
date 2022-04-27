@@ -29,6 +29,13 @@ footer {
   width: 100%;
   color: black;
   text-align: center;
-  background-color: white;
 }
 
+body {
+  background: rgb(255, 255, 255);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(203, 228, 255, 1) 100%
+  );
+}
