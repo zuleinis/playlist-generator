@@ -4,6 +4,7 @@ from http import client
 import time
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import spotipy.util as util
 from dotenv import load_dotenv
 import sys
 
@@ -15,11 +16,6 @@ client_ID = os.getenv("client_ID")
 client_SECRET = os.getenv("client_SECRET")
 redirect_url = os.getenv("redirect_url")
 scopes = ["user-library-read", "playlist-modify-public"]
-
-try:
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_ID, client_secret=client_SECRET, redirect_uri=redirect_url, scope=scopes))
-except:
-    print('ERROR: Unable to authenticate.', file=sys.stderr)
 
 
 def standarize_name(name):
@@ -96,6 +92,12 @@ def generate_full_playlist(artist_requested, playlist_name, playlist_description
     # artist_requested = input("Please enter the name the artist as it appears on Spotify: ")
     # playlist_name = input("What would you like your new playlist to be called? ")
     # playlist_description = input("Describe your playlist: ")
+    
+    try:
+        sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_ID, client_secret=client_SECRET, redirect_uri=redirect_url, scope=scopes))
+    except:
+        print('ERROR: Unable to authenticate.', file=sys.stderr)
+    
     
     try:
         tracks = get_saved_tracks(sp, artist_requested)
