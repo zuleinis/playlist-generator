@@ -94,19 +94,16 @@ def generate_full_playlist(artist_requested, playlist_name, playlist_description
     # playlist_description = input("Describe your playlist: ")
     
     try:
-        manager = SpotifyOAuth(client_id=client_ID, client_secret=client_SECRET, redirect_uri=redirect_url, scope=scopes, show_dialog=False)
-        token = manager.get_access_token(as_dict=True)
-        sp = spotipy.Spotify(auth=token ,auth_manager=manager)
+        sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_ID, client_secret=client_SECRET, redirect_uri=redirect_url, scope=scopes))
     except:
         print('ERROR: Unable to authenticate.', file=sys.stderr)
     
     
-    try:
+    
         tracks = get_saved_tracks(sp, artist_requested)
         playlist = create_playlist(sp, playlist_name, playlist_description)
         add_tracks_playlist(sp, playlist['id'], tracks.values())
         
         return playlist['id']
-    except:
-        return None
+    
     
