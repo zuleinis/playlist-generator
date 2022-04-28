@@ -1,14 +1,20 @@
 # -*- coding: utf-8 -*-
 # from flask import Flask, render_template
+from http import client
 import time
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-import cred 
+from dotenv import load_dotenv
 
+load_dotenv()
 
+import os
 
+client_ID = os.getenv("client_ID")
+client_SECRET = os.getenv("client_SECRET")
+redirect_url = os.getenv("redirect_url")
 scopes = ["user-library-read", "playlist-modify-public"]
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=cred.client_ID, client_secret= cred.client_SECRET, redirect_uri=cred.redirect_url, scope=scopes))
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_ID, client_secret=client_SECRET, redirect_uri=redirect_url, scope=scopes))
 
 
 

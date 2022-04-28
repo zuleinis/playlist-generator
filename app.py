@@ -1,5 +1,4 @@
 from backend import generate_full_playlist 
-import cred
 from  flask import Flask, request, render_template, url_for, flash, redirect
 
 app = Flask(__name__)
