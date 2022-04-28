@@ -63,8 +63,8 @@ def get_saved_tracks(sp, artist_requested):
     except:
         print('ERROR: Unable to retrieve saved tracks.', file=sys.stderr)
         print("SP" ,sp, file=sys.stderr)
-        if saved_tracks:
-            print("Saved Tracks:", saved_tracks, file=sys.stderr)
+        
+        print("Saved Tracks:", sp.current_user_saved_tracks(50,off), file=sys.stderr)
         
     return matched_tracks 
         
