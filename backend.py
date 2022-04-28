@@ -99,11 +99,12 @@ def generate_full_playlist(artist_requested, playlist_name, playlist_description
         print('ERROR: Unable to authenticate.', file=sys.stderr)
     
     
-    
+    try:
         tracks = get_saved_tracks(sp, artist_requested)
         playlist = create_playlist(sp, playlist_name, playlist_description)
         add_tracks_playlist(sp, playlist['id'], tracks.values())
         
         return playlist['id']
-    
+    except:
+        return None
     
