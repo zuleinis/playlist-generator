@@ -94,8 +94,18 @@ def generate_full_playlist(artist_requested, playlist_name, playlist_description
     # playlist_description = input("Describe your playlist: ")
     
     try:
+        
+        from spotipy.oauth2 import SpotifyClientCredentials
+
+        client_credentials_manager = SpotifyClientCredentials()
+        sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
         # token = SpotifyOAuth(username="heykriss", client_id=client_ID, client_secret=client_SECRET, redirect_uri=redirect_url, scope=scopes)
-        sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_ID, client_secret=client_SECRET, redirect_uri=redirect_url, scope=scopes))
+       
+       
+        # sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_ID, client_secret=client_SECRET, redirect_uri=redirect_url, scope=scopes))
+       
+       
         # token_info = token.get_access_token(as_dict=True)
         # access_token = token_info['access_token']
         # redirect_url_tkn = "https://playlist-aid.herokuapp.com/?code=" + access_token
